@@ -1,6 +1,13 @@
-user_name = input("Please enter your name: ")
-name=user_name.capitalize()
-print("Hello",name)
+import streamlit as st
+
+# Title
+st.title("Grade Checker")
+
+# Get user name and capitalize
+user_name = st.text_input("Please enter your name:")
+if user_name:
+    name = user_name.capitalize()
+    st.write(f"Hello, {name}!")
 
 # Function to get grade based on score
 def get_grade(score):
@@ -28,11 +35,10 @@ def get_grade(score):
 # List of subjects
 subjects = ["Math", "English", "Science", "History", "Computer"]
 
-# Loop through subjects and get scores
+st.write("Enter your scores:")
+
+# Create inputs and display grades
 for subject in subjects:
-    try:
-        score = float(input(f"Enter your score for {subject}: "))
-        grade = get_grade(score)
-        print(f"{subject}: Your grade is {grade}")
-    except ValueError:
-        print(f"{subject}: Please enter a number.")
+    score = st.number_input(f"{subject} score", min_value=0.0, max_value=100.0, step=0.1, key=subject)
+    grade = get_grade(score)
+    st.write(f"{subject}: Your grade is **{grade}**")
